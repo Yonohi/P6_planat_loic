@@ -8,14 +8,11 @@ const urlAction = "http://localhost:8000/api/v1/titles/?genre=action&sort_by=imd
 let title = document.getElementsByClassName('title-best-film')[0];
 let abstract = document.getElementsByClassName('abstract')[0];
 let img = document.getElementsByClassName('img-best')[0];
+let button = document.getElementsByClassName("button")[0];
 
 // Les fenêtres modales
 var modal = document.getElementById("modal");
 var backgroundModal = document.getElementsByClassName("background-modal")[0];
-
-
-// Bouton play
-let button = document.getElementsByClassName("button")[0];
 
 // Croix fermeture fenêtre modale
 let closeModal = document.getElementsByClassName("close")[0];
@@ -52,7 +49,7 @@ function timeH(time){
 }
 
 // Fonction récupérant 7 films à la suite
-function sevenFetch (urltest, className, number=7, deleteFirst= false){
+function sevenFetch (urltest, className, number=0, deleteFirst= false){
     fetch(urltest)
         .then(function (res){
             if (res.ok){
@@ -76,13 +73,13 @@ function sevenFetch (urltest, className, number=7, deleteFirst= false){
                     newImage.setAttribute("src", img_url);
                     newImage.setAttribute("onclick",infoFilm(newImage, value, index))
                     section.appendChild(newImage);
-                    number--
-                    if (number==0){
+                    number++
+                    if (number==7){
                         break
                     }
                 }
             }
-            if(number>0){
+            if(number<7){
                 return sevenFetch(previous, className, number)
             }
         })
@@ -90,7 +87,7 @@ function sevenFetch (urltest, className, number=7, deleteFirst= false){
 }
 
 // Récupération info meilleurs films selon imdb (film affiche+ 7 suivants)
-fetch(urlMaxImdb)
+let fetch7best = fetch(urlMaxImdb)
     .then(function (res){
         if (res.ok){
             return res.json();
