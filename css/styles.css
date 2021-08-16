@@ -1,0 +1,333 @@
+/* Général */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: whitesmoke;
+}
+
+p, a {
+    font-size: 20px;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+}
+
+h2 {
+    color: black;
+    font-size: 24px;
+}
+
+hr {
+    margin: 2px;
+}
+
+img:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+img {
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+/* header */
+header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(98, 112, 124);
+}
+
+img.logo {
+    transform: none;
+    height: 50px;
+    margin: 35px;
+}
+
+header nav {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center; 
+    justify-content: space-evenly;
+}
+
+.nav-line {
+    width: 20px;
+}
+
+nav li, .drop-down, .drop-down li a{
+    list-style: none;
+    font-size: 18px;
+    color: whitesmoke;
+    font-weight: 600;
+    cursor: pointer;
+}
+.drop-down{
+    width: 120px;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+}
+
+.drop-down li a {
+    display: none;
+}
+
+.drop-down:hover li a{
+    display: inline;
+    position: relative;
+}
+
+.drop-down:hover li{
+    padding: 8px 15px;
+    z-index: 1;
+    background-color: rgb(98, 112, 124);
+    width: 120px;
+}
+
+/* Welcome video */
+.best-film {
+    display: flex;
+    justify-content: space-around;
+    border: black 5px solid;
+    height: 300px;
+    margin: 20px ;
+}
+
+button {
+    width: 80px;
+    height: 30px;
+    background-color: rgb(223, 71, 71);
+    border-radius: 30px;
+    border: 0px;
+    color: whitesmoke;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color:rgba(223, 71, 71, 0.7);
+    border: rgb(223, 71, 71) 2px solid;
+    
+}
+
+.in-best-film {
+    flex: 2;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+}
+
+.img-zone {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.img-best {
+    height: 100%;  
+}
+
+.title-best-film {
+    font-size: 30px;
+}
+
+.abstract {
+    max-width: 700px;
+}
+
+/* les sections de film */
+.film-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    background-color:whitesmoke;
+}
+
+.film-list {
+    overflow: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(98, 112, 124);
+    height: 300px;
+    width: 100%;
+}
+
+
+.film-list li {
+    list-style: none;
+    
+    
+}
+
+.img-film {
+    height: 250px;
+    background-color: yellow;
+    margin: 0px 10px;
+}
+
+/* Les flêches */
+
+.cursor-left, .cursor-right {
+    height: 100px;
+    width: 60px;
+    cursor: pointer;
+    background-color: transparent;
+    position: absolute;
+    z-index: 1;
+    filter: invert(100%) ;
+    opacity: 0.8;
+}
+
+.cursor-left {
+    left: 0px;
+}
+
+.cursor-right {
+    right: 0px;
+}
+
+.cursor-right:hover, .cursor-left:hover {
+    opacity: 1;
+}
+
+/* Footer */
+footer {
+    display: flex;
+    align-items: center;
+    height: 100px;
+}
+
+footer p {
+    flex: 1;
+    text-align: center;
+}
+
+/* les fenêtres modales */
+.background-modal {  
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+} 
+
+#modal {
+    display: none;
+    position: fixed;
+    background-color: whitesmoke;
+    border: rgb(98, 112, 124) 20px solid;
+    max-height: 50%;
+    bottom: 0%;
+    left: 0%;
+    right: 50%;
+    padding: 0px 20px;
+    z-index:5;
+    overflow: scroll;
+}
+
+.modal-content {
+    height: auto;
+}
+
+.modal-content img {
+    margin: 25px;
+    float: right;
+    clear: both;
+    transform: none;
+    width: 35%;
+    max-width: 250px;
+}
+
+.close {
+    text-align: center;
+    background-color: whitesmoke;
+    border: rgba(0, 0, 0, 0.253) 1px solid;
+    height: 35px;
+    width: 35px;
+    position: fixed;
+    color: black;
+    font-weight: 700;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 10;
+    right: 52%;
+
+}
+
+.text-modal p {
+    font-size: 16px;
+    margin: 9px;
+    margin-left: 5%;
+    
+}
+
+p em {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.text-modal {
+    padding-top: 40px;
+    
+}
+
+/* Media queries pour le responsive */
+@media screen and (max-width : 640px) {
+    /* fenêtre modale */
+    #modal {
+        border: rgb(98, 112, 124) 10px solid;
+        right: 0%;
+    }    
+    .text-modal p {
+        font-size: 16px;
+        margin-left: 5%;    
+    }
+    .modal-content img {
+        margin: 0px;
+        margin-top: 20px;
+    }
+    p em {
+        font-size: 18px;
+    }
+    /* Film mis en avant */
+    .title-best-film {
+        font-size: 16px;
+    }
+    .abstract{
+        font-size: 14px;
+        flex-wrap: nowrap;
+        overflow: scroll;
+    }
+    .img-zone {
+        flex: 2;
+        max-width: 50%;
+        display: flex;
+    }
+    .img-best{
+        height: 80%;
+        align-self: center;
+        padding-right: 10px;
+    }
+    .close {
+        right: 10px;
+
+    }
+    }
