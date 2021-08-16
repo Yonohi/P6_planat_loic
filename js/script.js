@@ -1,4 +1,3 @@
-
 // Récupération des url 
 const urlMaxImdb = "http://localhost:8000/api/v1/titles/?sort_by=imdb_score&page=last";
 const urlFantasy = "http://localhost:8000/api/v1/titles/?genre=fantasy&sort_by=imdb_score&page=last"
@@ -15,10 +14,10 @@ var modal = document.getElementById("modal");
 var backgroundModal = document.getElementsByClassName("background-modal")[0];
 
 
-// bouton play
+// Bouton play
 let button = document.getElementsByClassName("button")[0];
 
-// croix fermeture fenêtre modale
+// Croix fermeture fenêtre modale
 let closeModal = document.getElementsByClassName("close")[0];
 closeModal.onclick = function(){
     modal.style.display = "none";
@@ -36,7 +35,7 @@ backgroundModal.addEventListener("scroll", function(e){
     e.stopPropagation()
 })
 
-// info modal
+// Info modal
 let imgModal = document.getElementsByClassName("img-modal")[0]
 let textModal = document.getElementsByClassName("modal-txt")[0]
 
@@ -133,7 +132,7 @@ sevenFetch(urlFantasy, className="fantasy")
 sevenFetch(urlAnimation, className="animation")
 sevenFetch(urlAction, className="action")
 
-// fonction pour récupérer les info des films
+// Fonction pour récupérer les info des films
 function infoFilm (element, value, index){
     element.addEventListener("click",function(event){
         modal.style.display = "block"
