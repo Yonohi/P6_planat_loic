@@ -1,8 +1,8 @@
 // Récupération des url 
 const urlMaxImdb = "http://localhost:8000/api/v1/titles/?sort_by=imdb_score&page=last";
-const urlFantasy = "http://localhost:8000/api/v1/titles/?genre=fantasy&sort_by=imdb_score&page=last"
-const urlAnimation = "http://localhost:8000/api/v1/titles/?genre=animation&sort_by=imdb_score&page=last"
-const urlAction = "http://localhost:8000/api/v1/titles/?genre=action&sort_by=imdb_score&page=last"
+const urlFantasy = "http://localhost:8000/api/v1/titles/?genre=fantasy&sort_by=imdb_score&page=last";
+const urlAnimation = "http://localhost:8000/api/v1/titles/?genre=animation&sort_by=imdb_score&page=last";
+const urlAction = "http://localhost:8000/api/v1/titles/?genre=action&sort_by=imdb_score&page=last";
 
 // film au plus haut score imdb
 let title = document.getElementsByClassName('title-best-film')[0];
@@ -13,26 +13,28 @@ let button = document.getElementsByClassName("button")[0];
 // Les fenêtres modales
 var modal = document.getElementById("modal");
 var backgroundModal = document.getElementsByClassName("background-modal")[0];
+var body = document.getElementsByTagName("body")[0];
 
 // Croix fermeture fenêtre modale
 let closeModal = document.getElementsByClassName("close")[0];
 closeModal.onclick = function(){
     modal.style.display = "none";
     backgroundModal.style.display = "none";
+    body.style.overflow = "scroll"
 }
 // Fonction pour le background modal
 window.onclick = function(event) {
     if (event.target == backgroundModal) {
         modal.style.display = "none";
-        // modal.style.position = 0;
         backgroundModal.style.display = "none";
+        body.style.overflow = "scroll"
     }
   }
 backgroundModal.addEventListener("scroll", function(e){
     e.stopPropagation()
 })
 
-// Info modal
+// Info modal 
 let imgModal = document.getElementsByClassName("img-modal")[0]
 let textModal = document.getElementsByClassName("modal-txt")[0]
 
@@ -49,7 +51,7 @@ function timeH(time){
 }
 
 // Fonction récupérant 7 films à la suite
-function sevenFetch (urltest, className, number=0, deleteFirst= false){
+function sevenFetch (urltest, className, number=7, deleteFirst= false){
     fetch(urltest)
         .then(function (res){
             if (res.ok){
@@ -59,7 +61,7 @@ function sevenFetch (urltest, className, number=0, deleteFirst= false){
         .then(function(value){
             let previous = value["previous"]
             let nbResults = value["results"].length 
-            if (nbResults >= 1){
+            if (nbResults > 1){
                 for(i= 0; i<nbResults; i++ ){
                     if (deleteFirst){
                         deleteFirst=false
@@ -73,13 +75,13 @@ function sevenFetch (urltest, className, number=0, deleteFirst= false){
                     newImage.setAttribute("src", img_url);
                     newImage.setAttribute("onclick",infoFilm(newImage, value, index))
                     section.appendChild(newImage);
-                    number++
-                    if (number==7){
+                    number--
+                    if (number==0){
                         break
                     }
                 }
             }
-            if(number<7){
+            if(number>0){
                 return sevenFetch(previous, className, number)
             }
         })
@@ -87,7 +89,7 @@ function sevenFetch (urltest, className, number=0, deleteFirst= false){
 }
 
 // Récupération info meilleurs films selon imdb (film affiche+ 7 suivants)
-let fetch7best = fetch(urlMaxImdb)
+fetch(urlMaxImdb)
     .then(function (res){
         if (res.ok){
             return res.json();
@@ -100,11 +102,7 @@ let fetch7best = fetch(urlMaxImdb)
             var urlinfo = info[nbResults-1]["url"]
             img.setAttribute("onclick",infoFilm(img, value, nbResults-1)) 
             button.onclick = infoFilm(button, value, nbResults-1)
-            sevenFetch(urlMaxImdb,className="sevenBest", number=7, deleteFirst= true)        
         } if (nbResults==1){
-            // On récupère les 7 films suivants
-            urlSecondImdb = value["previous"];
-            sevenFetch (urlSecondImdb, className="sevenBest")
             var urlinfo = info[0]["url"];
             img.setAttribute("onclick",infoFilm(img, value, 0))
             button.onclick = infoFilm(button, value, 0)
@@ -124,7 +122,8 @@ let fetch7best = fetch(urlMaxImdb)
     })
     .catch(function(err){})
 
-// Récupération des info pour les genres fantasy, animation et action
+// Récupération des info pour les mieux notés et les genres fantasy, animation et action
+sevenFetch(urlMaxImdb,className="sevenBest", number=7, deleteFirst= true)
 sevenFetch(urlFantasy, className="fantasy")
 sevenFetch(urlAnimation, className="animation")
 sevenFetch(urlAction, className="action")
@@ -134,6 +133,7 @@ function infoFilm (element, value, index){
     element.addEventListener("click",function(event){
         modal.style.display = "block"
         backgroundModal.style.display = "block"
+        body.style.overflow = "hidden"
         let urlinfo = value["results"][index]["url"]
         fetch(urlinfo)
             .then(function(res){

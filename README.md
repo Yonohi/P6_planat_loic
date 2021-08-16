@@ -3,6 +3,9 @@
 ## Description
 
 Project around different langages : JavaScript, HTML, CSS 
+You can see different parts on the website which present movies by category.
+If you click on an image you will have a modal window that will display a description of the movie.
+Same thing if you click on the play button.
 
 ***
 ## Requirements
