@@ -21,7 +21,11 @@ Clone the remote repository:
 ```
 git clone https://github.com/Yonohi/P6_planat_loic.git
 ```
-Once you have installed the API, if it's not done activate the environment:
+Once you have installed the API, go to the API folder:
+```
+cd <pathdirectory>/OCMovies-API-EN-FR
+```
+if it's not done activate the environment:
 
 On Unix and macOS:
 ```
