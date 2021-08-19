@@ -1,8 +1,8 @@
 // Récupération des url 
-const urlMaxImdb = "http://localhost:8000/api/v1/titles/?sort_by=imdb_score&page=last";
-const urlFantasy = "http://localhost:8000/api/v1/titles/?genre=fantasy&sort_by=imdb_score&page=last";
-const urlAnimation = "http://localhost:8000/api/v1/titles/?genre=animation&sort_by=imdb_score&page=last";
-const urlAction = "http://localhost:8000/api/v1/titles/?genre=action&sort_by=imdb_score&page=last";
+const urlMaxImdb = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
+const urlFantasy = "http://localhost:8000/api/v1/titles/?genre=fantasy&sort_by=-imdb_score";
+const urlAnimation = "http://localhost:8000/api/v1/titles/?genre=animation&sort_by=-imdb_score";
+const urlAction = "http://localhost:8000/api/v1/titles/?genre=action&sort_by=-imdb_score";
 
 // film au plus haut score imdb
 let title = document.getElementsByClassName('title-best-film')[0];
@@ -22,17 +22,6 @@ closeModal.onclick = function(){
     backgroundModal.style.display = "none";
     body.style.overflow = "scroll"
 }
-// Fonction pour le background modal
-window.onclick = function(event) {
-    if (event.target == backgroundModal) {
-        modal.style.display = "none";
-        backgroundModal.style.display = "none";
-        body.style.overflow = "scroll"
-    }
-  }
-backgroundModal.addEventListener("scroll", function(e){
-    e.stopPropagation()
-})
 
 // Info modal 
 let imgModal = document.getElementsByClassName("img-modal")[0]
@@ -59,7 +48,7 @@ function sevenFetch (urltest, className, number=7, deleteFirst= false){
             }
         })
         .then(function(value){
-            let previous = value["previous"]
+            let next = value["next"]
             let nbResults = value["results"].length 
             if (nbResults > 1){
                 for(i= 0; i<nbResults; i++ ){
@@ -67,13 +56,12 @@ function sevenFetch (urltest, className, number=7, deleteFirst= false){
                         deleteFirst=false
                         continue
                     }
-                    let index = nbResults - (i+1);
-                    let img_url = value["results"][index]["image_url"];
+                    let img_url = value["results"][i]["image_url"];
                     let section = document.getElementsByClassName(className)[0];
                     newImage = document.createElement("img");
                     newImage.setAttribute("class", "img-film")
                     newImage.setAttribute("src", img_url);
-                    newImage.setAttribute("onclick",infoFilm(newImage, value, index))
+                    newImage.setAttribute("onclick",infoFilm(newImage, value, i))
                     section.appendChild(newImage);
                     number--
                     if (number==0){
@@ -82,7 +70,7 @@ function sevenFetch (urltest, className, number=7, deleteFirst= false){
                 }
             }
             if(number>0){
-                return sevenFetch(previous, className, number)
+                return sevenFetch(next, className, number)
             }
         })
         .catch(function(err){})
@@ -97,16 +85,9 @@ fetch(urlMaxImdb)
     })
     .then(function(value){
         let info = value["results"]
-        let nbResults = info.length
-        if (nbResults>1){
-            var urlinfo = info[nbResults-1]["url"]
-            img.setAttribute("onclick",infoFilm(img, value, nbResults-1)) 
-            button.onclick = infoFilm(button, value, nbResults-1)
-        } if (nbResults==1){
-            var urlinfo = info[0]["url"];
-            img.setAttribute("onclick",infoFilm(img, value, 0))
-            button.onclick = infoFilm(button, value, 0)
-        }
+        var urlinfo = info[0]["url"];
+        img.setAttribute("onclick",infoFilm(img, value, 0))
+        button.onclick = infoFilm(button, value, 0)
         fetch(urlinfo)
             .then(function(res){
                 if(res.ok){
@@ -179,9 +160,16 @@ let zoneAnimation = document.getElementsByClassName("animation")[0];
 let zoneFantasy = document.getElementsByClassName("fantasy")[0];
 let bestFilms = document.getElementsByClassName("sevenBest")[0];
 function goLeft(zone){
-    zone.scrollLeft -= 200
+    zone.scrollBy({
+        left : -200,
+        behavior : "smooth"
+    }    
+    )  
 }
 function goRight(zone){
-    zone.scrollLeft += 200
-    
+    zone.scrollBy({
+        left : 200,
+        behavior : "smooth"
+    }    
+    )  
 }
