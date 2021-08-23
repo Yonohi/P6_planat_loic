@@ -48,6 +48,7 @@ img.logo {
     transform: none;
     height: 50px;
     margin: 35px;
+    cursor: auto;
 }
 
 header nav {
@@ -130,8 +131,7 @@ button:hover {
 
 .img-zone {
     flex: 1;
-    display: flex;
-    justify-content: center;
+    text-align: center;
 }
 
 .img-best {
@@ -152,7 +152,7 @@ button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 350px;
+    height: 450px;
     background-color:whitesmoke;
 }
 
@@ -162,21 +162,20 @@ button:hover {
     align-items: center;
     justify-content: space-between;
     background-color: rgb(98, 112, 124);
-    height: 300px;
-    width: 100%;
+    height: 350px;
+    width: 80%;
 }
 
-
-.film-list li {
-    list-style: none;
-    
-    
+.film-list div{
+    height: 300px;
+    min-width: 250px; 
+    margin: 0px 20px;
+    text-align: center;
 }
 
 .img-film {
-    height: 250px;
-    background-color: yellow;
-    margin: 0px 10px;
+    height: 300px;   
+   
 }
 
 /* Les flêches */
@@ -188,8 +187,8 @@ button:hover {
     background-color: transparent;
     position: absolute;
     z-index: 1;
-    filter: invert(100%) ;
-    opacity: 0.8;
+    opacity: 0.6;
+    margin: 0px 2%;;
 }
 
 .cursor-left {
@@ -289,6 +288,7 @@ p em {
     
 }
 
+
 /* Media queries pour le responsive */
 @media screen and (max-width : 640px) {
     /* fenêtre modale */
@@ -329,5 +329,30 @@ p em {
     .close {
         right: 10px;
 
+    }
+    /* section de film */
+    .cursor-left, .cursor-right {
+        filter: invert(100%) ;
+        height: 75px;
+        width: 45px;
+    }
+    .film-section {
+        height: 300px;
+    }
+    
+    .film-list {
+        height: 250px;
+        width: 100%;
+    }
+    
+    .film-list div{
+        height: 200px;
+        min-width: 150px;
+        margin: 0px 10px;
+        text-align: center;
+    }
+    .img-film {
+        height: 100%;
+        width: auto;
     }
     }
