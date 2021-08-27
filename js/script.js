@@ -50,43 +50,42 @@ function sevenFetch (urltest, className, number=7, takeFirst= false){
         .then(function(value){
             let next = value["next"]
             let info = value["results"]
-            var urlinfo = info[0]["url"];
             let nbResults = info.length 
-            if (nbResults > 1){
-                for(i= 0; i<nbResults; i++ ){
-                    if (takeFirst){
-                        takeFirst=false
-                        img.setAttribute("onclick",infoFilm(img, value, 0))
-                        button.onclick = infoFilm(button, value, 0)
-                        fetch(urlinfo)
-                            .then(function(res){
-                                if(res.ok){
-                                    return res.json()
-                                }
-                            })
-                            .then(function(value){
-                                title.innerHTML = value["title"]
-                                abstract.innerHTML = value["long_description"]
-                                img.setAttribute("src", value["image_url"])
-                            })
-                            .catch(function(err){})
-                        continue
-                    }
-                    let img_url = value["results"][i]["image_url"];
-                    let section = document.getElementsByClassName(className)[0];
-                    newDiv = document.createElement("div");
-                    newImage = document.createElement("img");
-                    newImage.setAttribute("class", "img-film")
-                    newImage.setAttribute("src", img_url);
-                    newImage.setAttribute("onclick",infoFilm(newImage, value, i))
-                    section.appendChild(newDiv);
-                    newDiv.appendChild(newImage);
-                    number--
-                    if (number==0){
-                        break
-                    }
+            for(i= 0; i<nbResults; i++ ){
+                var urlinfo = info[i]["url"];
+                if (takeFirst){
+                    takeFirst=false
+                    infoFilm(img, urlinfo)
+                    infoFilm(button, urlinfo)
+                    fetch(urlinfo)
+                        .then(function(res){
+                            if(res.ok){
+                                return res.json()
+                            }
+                        })
+                        .then(function(value){
+                            title.innerHTML = value["title"]
+                            abstract.innerHTML = value["long_description"]
+                            img.setAttribute("src", value["image_url"])
+                        })
+                        .catch(function(err){})
+                    continue
+                }
+                let img_url = info[i]["image_url"];
+                let section = document.getElementsByClassName(className)[0];
+                newDiv = document.createElement("div");
+                newImage = document.createElement("img");
+                newImage.setAttribute("class", "img-film")
+                newImage.setAttribute("src", img_url);
+                infoFilm(newImage, urlinfo)
+                section.appendChild(newDiv);
+                newDiv.appendChild(newImage);
+                number--
+                if (number==0){
+                    break
                 }
             }
+            
             if(number>0){
                 sevenFetch(next, className, number)
             }
@@ -101,13 +100,9 @@ sevenFetch(urlAnimation, className="animation")
 sevenFetch(urlAction, className="action")
 
 // Fonction pour récupérer les info des films
-function infoFilm (element, value, index){
+function infoFilm (element, url){
     element.addEventListener("click",function(event){
-        modal.style.display = "block"
-        backgroundModal.style.display = "block"
-        body.style.overflow = "hidden"
-        let urlinfo = value["results"][index]["url"]
-        fetch(urlinfo)
+        fetch(url)
             .then(function(res){
                 if(res.ok){
                     return res.json()
@@ -126,6 +121,9 @@ function infoFilm (element, value, index){
                 +"</br><em>Pays d'origine : </em></br>&emsp;" + value["countries"]
                 +"</br><em>Score au Box-Office : </em></br>&emsp;" + value["worldwide_gross_income"]
                 +"</br><em>Description : </em></br>&emsp;" + value["long_description"]
+                modal.style.display = "block"
+                backgroundModal.style.display = "block"
+                body.style.overflow = "hidden"
             })
             .catch(function(err){})
     })
